@@ -1,7 +1,7 @@
 
 // ### 2. Jenkinsfile
 
-```groovy
+// ```groovy
 pipeline {
     agent any
 
