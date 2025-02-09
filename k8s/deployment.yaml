@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: sample-app
-        image: mydockerhubusername/sample-app:latest
+        image: 3122022/sample-app:latest
         ports:
         - containerPort: 5000

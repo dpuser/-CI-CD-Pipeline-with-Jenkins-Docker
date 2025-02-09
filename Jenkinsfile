@@ -1,6 +1,4 @@
 
----
-
 ### 2. Jenkinsfile
 
 ```groovy
@@ -9,7 +7,7 @@ pipeline {
 
     environment {
         // Update these values to match your Docker registry and credentials
-        REGISTRY = "mydockerhubusername"
+        REGISTRY = "3122022"
         IMAGE_NAME = "sample-app"
         IMAGE_TAG = "latest"
         DOCKER_CREDENTIALS_ID = "dockerhub-credentials"
