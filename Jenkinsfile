@@ -45,12 +45,21 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        // stage('Deploy to Kubernetes') {
+        //     steps {
+        //         echo 'Deploying to Kubernetes using Ansible...'
+        //         sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
+        //     }
+        // }
+        stage('Apply Kubernetes files') {
             steps {
-                echo 'Deploying to Kubernetes using Ansible...'
-                sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
-            }
+            //  sh label: '', script: '''scp *.yml admin@172.28.96.203:/C:\Program Files\Jenkins
+                sh label: '', script: '''scp *.yml admin@172.28.96.203:/var/lib/Jenkins
+                                  ssh jenkins@172.28.96.203 kubectl apply -f deploy-kube.yml
+                                  ssh jenkins@172.28.96.203 kubectl apply -f service.yml'''
+           
         }
+     }
     }
 
     post {
