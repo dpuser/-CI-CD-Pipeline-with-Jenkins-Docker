@@ -55,8 +55,7 @@ pipeline {
             steps {
             //  sh label: '', script: '''scp *.yml admin@172.28.96.203:/C:\Program Files\Jenkins
                 sh label: '', script: '''scp *.yml admin@172.28.96.203:/var/lib/Jenkins
-                                    ssh jenkins@172.28.96.203 kubectl apply -f  /k8s/deployment.yaml
-                                    ssh jenkins@172.28.96.203 kubectl apply -f service.yml'''
+                                    ssh jenkins@172.28.96.203 kubectl apply -f  /k8s/deployment.yaml'''
            
         }
      }
