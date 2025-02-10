@@ -45,12 +45,7 @@ pipeline {
             }
         }
 
-        // stage('Deploy to Kubernetes') {
-        //     steps {
-        //         echo 'Deploying to Kubernetes using Ansible...'
-        //         sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
-        //     }
-        // }
+        
         stage('Apply Kubernetes files') {
             steps {
                 
