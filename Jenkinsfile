@@ -53,9 +53,9 @@ pipeline {
         // }
         stage('Apply Kubernetes files') {
             steps {
-            //  sh label: '', script: '''scp *.yml admin@172.28.96.203:/C:\Program Files\Jenkins
-                sh label: '', script: '''scp *.yml admin@172.28.96.203:/var/lib/Jenkins
-                                            sh jenkins@172.28.96.203 kubectl apply -f /k8s/deployment.yaml'''
+                
+                echo 'Deploying to Kubernetes...'
+                sh 'jenkins@172.28.96.203 kubectl apply -f k8s/deployment.yaml'
            
         }
      }
