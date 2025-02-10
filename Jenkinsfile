@@ -55,7 +55,7 @@ pipeline {
             steps {
                 
                 echo 'Deploying to Kubernetes...'
-                sh 'jenkins@172.28.96.203 kubectl apply -f k8s/deployment.yaml'
+                sh 'kubectl apply -f k8s/deployment.yaml'
            
         }
      }
