@@ -22,7 +22,7 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'docker hub connection/3122022'
-    repository: '3122022/azure sample-app'
+    repository: '3122022/azure-sample-app'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
@@ -34,4 +34,3 @@ steps:
     namespace: 'default'
     command: 'apply'
     arguments: '-f k8s/deployment.yaml'
-
