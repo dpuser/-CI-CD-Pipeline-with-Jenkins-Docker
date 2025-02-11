@@ -29,8 +29,8 @@ steps:
 
 - task: Kubernetes@1
   inputs:
-    connectionType: 'k3s-rancher-ubuntu-preview'
-    kubernetesServiceEndpoint: 'https://127.0.0.1:6443'
+    connectionType: 'KubernetesServiceConnection'
+    kubernetesServiceEndpoint: 'k3s-rancher-ubuntu-preview'
     namespace: 'default'
     command: 'apply'
     arguments: '-f k8s/deployment.yaml'
