@@ -21,7 +21,7 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'dockerhub'
+    containerRegistry: 'docker hub connection/3122022'
     repository: '3122022/azure sample-app'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
@@ -29,7 +29,7 @@ steps:
 
 - task: Kubernetes@1
   inputs:
-    connectionType: 'KubernetesServiceConnection'
+    connectionType: 'k3s-rancher-ubuntu-preview'
     kubernetesServiceEndpoint: ' 172.28.96.203'
     namespace: 'default'
     command: 'apply'
