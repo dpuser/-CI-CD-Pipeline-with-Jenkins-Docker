@@ -9,25 +9,29 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- task: UseNode@0
+- task: UsePythonVersion@0
   inputs:
-    versionSpec: '14.x'
-- script: npm install
+    versionSpec: '3.9'
+    addToPath: true
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
   displayName: 'Install dependencies'
-- script: npm test
-  displayName: 'Run tests'
-- script: npm run build
-  displayName: 'Build project'
+
 - task: Docker@2
   inputs:
     containerRegistry: 'dockerhub'
-    repository: 'your-docker-hub-username/your-repo'
-    command: 'build'
+    repository: '3122022/azure sample-app'
+    command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+
 - task: Kubernetes@1
   inputs:
     connectionType: 'KubernetesServiceConnection'
-    kubernetesServiceEndpoint: 'your-kubernetes-service-endpoint'
+    kubernetesServiceEndpoint: ' 172.28.96.203'
     namespace: 'default'
     command: 'apply'
-    arguments: '-f your-kubernetes-manifest.yaml'
+    arguments: '-f k8s/deployment.yaml'
+
