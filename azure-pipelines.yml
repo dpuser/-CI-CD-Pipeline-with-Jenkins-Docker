@@ -27,15 +27,15 @@ steps:
     Dockerfile: '**/Dockerfile'
     tags: 'latest'
 
-- script: |
-    mkdir -p ~/.kube
-    echo "$KUBECONFIG_CONTENT" | base64 --decode > ~/.kube/config
-  displayName: 'Set up kubeconfig'
+# - script: |
+#     mkdir -p ~/.kube
+#     echo "$KUBECONFIG_CONTENT" | base64 --decode > ~/.kube/config
+#   displayName: 'Set up kubeconfig'
 
-- script: kubectl apply -f k8s/deployment.yaml
-  displayName: 'Deploy to Kubernetes'
-  env:
-    KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
+# - script: kubectl apply -f k8s/deployment.yaml
+#   displayName: 'Deploy to Kubernetes'
+#   env:
+#     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
 
 
 # trigger:
