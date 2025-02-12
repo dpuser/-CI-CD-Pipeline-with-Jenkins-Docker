@@ -1,15 +1,15 @@
 
----
+// ---
 
-### 2. Jenkinsfile
+// ### 2. Jenkinsfile
 
-```groovy
+// ```groovy
 pipeline {
     agent any
 
     environment {
         // Update these values to match your Docker registry and credentials
-        REGISTRY = "mydockerhubusername"
+        REGISTRY = "3122022"
         IMAGE_NAME = "sample-app"
         IMAGE_TAG = "latest"
         DOCKER_CREDENTIALS_ID = "dockerhub-credentials"
@@ -47,12 +47,15 @@ pipeline {
             }
         }
 
-        stage('Deploy to Kubernetes') {
+        
+        stage('Apply Kubernetes files') {
             steps {
-                echo 'Deploying to Kubernetes using Ansible...'
-                sh 'ansible-playbook -i ansible/inventory.ini ansible/deploy.yml'
-            }
+                
+                echo 'Deploying to Kubernetes...'
+                sh 'kubectl apply -f k8s/deployment.yaml'
+           
         }
+     }
     }
 
     post {
