@@ -6,11 +6,9 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-22.04'
   name: default
-
-demands:
-- Agent.OS -equals Linux
+  demands:
+    - Agent.OS -equals Linux
 
 steps:
 - task: UsePythonVersion@0
@@ -33,13 +31,17 @@ steps:
 
 - script: |
     mkdir -p ~/.kube
-    echo "$KUBECONFIG_CONTENT" | base64 --decode > ~/.kube/config
+    echo "$(KUBECONFIG_CONTENT)" | base64 --decode > ~/.kube/config
   displayName: 'Set up kubeconfig'
+  env:
+    KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
 
 - script: kubectl apply -f k8s/deployment.yaml
   displayName: 'Deploy to Kubernetes'
   env:
     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
+
+
 
 
 # trigger:
