@@ -7,6 +7,10 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-22.04'
+  name: default
+
+demands:
+- Agent.OS -equals Linux
 
 steps:
 - task: UsePythonVersion@0
