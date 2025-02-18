@@ -11,20 +11,9 @@ pool:
     - Agent.OS -equals Linux
 
 steps:
-- script: |
-    apt-get update -y
-    apt-get install -y wget build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev
-  displayName: 'Install dependencies for building Python'
-
-- script: |
-    curl https://pyenv.run | bash
-    export PATH="$HOME/.pyenv/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    pyenv install 3.9.7
-    pyenv global 3.9.7
-  displayName: 'Install pyenv and Python 3.9.7'
+  - script: |
+  python3.9 --version
+displayName: 'Verify Python Version'
 
 - script: |
     python3.9 -m pip install --upgrade pip
@@ -54,7 +43,9 @@ steps:
 
 
 
-
+  #   - script: |
+  #   python3.9 --version
+  # displayName: 'Verify Python Version'
 
 
 # trigger:
