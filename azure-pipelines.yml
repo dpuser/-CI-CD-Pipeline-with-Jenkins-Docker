@@ -12,6 +12,13 @@ pool:
 
 steps:
 - script: |
+    sudo chown root:root /etc/sudoers.d/90-cloud-init-users
+    sudo chown root:root /etc/sudoers.d/README
+    sudo chmod 440 /etc/sudoers.d/90-cloud-init-users
+    sudo chmod 440 /etc/sudoers.d/README
+  displayName: 'Fix sudoers file ownership and permissions'
+
+- script: |
     sudo apt-get update
     sudo apt-get install python3.9
     sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
@@ -41,6 +48,7 @@ steps:
   displayName: 'Deploy to Kubernetes'
   env:
     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
+
 
 
 
