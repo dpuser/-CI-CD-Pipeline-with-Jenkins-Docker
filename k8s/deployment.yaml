@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: sample-app4
-        image: 3122022/azure-sample-app2:latest
+        image: 3122022/azure-sample-app5:latest
         ports:
         - containerPort: 5000
       imagePullSecrets:
