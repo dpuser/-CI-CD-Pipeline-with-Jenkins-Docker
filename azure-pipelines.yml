@@ -12,25 +12,22 @@ pool:
 
 steps:
 - script: |
-    chown root:root /etc/sudoers.d/90-cloud-init-users
-    chown root:root /etc/sudoers.d/README
-    chmod 440 /etc/sudoers.d/90-cloud-init-users
-    chmod 440 /etc/sudoers.d/README
-  displayName: 'Fix sudoers file ownership and permissions'
-  env:
-    SUDO_ASKPASS: /bin/true
+    apt-get update -y
+    apt-get install -y wget build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev
+  displayName: 'Install dependencies for building Python'
 
 - script: |
-    apt-get update
-    apt-get install -y python3.9
-    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
-  displayName: 'Install Python 3.9'
-  env:
-    SUDO_ASKPASS: /bin/true
+    wget https://www.python.org/ftp/python/3.9.7/Python-3.9.7.tgz
+    tar -xf Python-3.9.7.tgz
+    cd Python-3.9.7
+    ./configure --enable-optimizations
+    make -j 4
+    make altinstall
+  displayName: 'Build and install Python 3.9.7'
 
 - script: |
-    python3 -m pip install --upgrade pip
-    pip install -r app/requirements.txt
+    python3.9 -m pip install --upgrade pip
+    pip3.9 install -r app/requirements.txt
   displayName: 'Install dependencies'
 
 - task: Docker@2
