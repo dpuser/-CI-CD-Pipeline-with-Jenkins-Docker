@@ -17,13 +17,14 @@ steps:
   displayName: 'Install dependencies for building Python'
 
 - script: |
-    wget https://www.python.org/ftp/python/3.9.7/Python-3.9.7.tgz
-    tar -xf Python-3.9.7.tgz
-    cd Python-3.9.7
-    ./configure --enable-optimizations
-    make -j 4
-    make altinstall
-  displayName: 'Build and install Python 3.9.7'
+    curl https://pyenv.run | bash
+    export PATH="$HOME/.pyenv/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+    pyenv install 3.9.7
+    pyenv global 3.9.7
+  displayName: 'Install pyenv and Python 3.9.7'
 
 - script: |
     python3.9 -m pip install --upgrade pip
