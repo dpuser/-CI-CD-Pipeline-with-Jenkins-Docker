@@ -11,13 +11,14 @@ pool:
     - Agent.OS -equals Linux
 
 steps:
-- task: UsePythonVersion@0
-  inputs:
-    versionSpec: '3.9'
-    addToPath: true
+- script: |
+    sudo apt-get update
+    sudo apt-get install python3.9
+    sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+  displayName: 'Install Python 3.9'
 
 - script: |
-    python -m pip install --upgrade pip
+    python3 -m pip install --upgrade pip
     pip install -r app/requirements.txt
   displayName: 'Install dependencies'
 
@@ -40,6 +41,7 @@ steps:
   displayName: 'Deploy to Kubernetes'
   env:
     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
+
 
 
 
