@@ -16,16 +16,6 @@ steps:
   displayName: 'Verify Python Version'
 
 - script: |
-    curl https://pyenv.run | bash
-    export PATH="$HOME/.pyenv/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    pyenv install 3.9.7
-    pyenv global 3.9.7
-  displayName: 'Install pyenv and Python 3.9.7'
-
-- script: |
     python3.9 -m pip install --upgrade pip
     pip3.9 install -r app/requirements.txt
   displayName: 'Install dependencies'
