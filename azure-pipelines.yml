@@ -1,0 +1,81 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+
+pool:
+  name: default
+  demands:
+    - Agent.OS -equals Linux
+
+steps:
+- script: |
+    export PATH="/home/devops/.local/bin:$PATH"
+    python3.9 --version
+  displayName: 'Verify Python Version'
+
+- script: |
+    export PATH="/home/devops/.local/bin:$PATH"
+    python3.9 -m pip install --upgrade pip
+    pip install -r app/requirements.txt
+  displayName: 'Install dependencies'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'docker hub connection/3122022'
+    repository: '3122022/azure-sample-app5'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    tags: 'latest'
+
+- script: |
+    export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+    kubectl apply -f k8s/deployment.yaml
+  displayName: 'Deploy to Kubernetes'
+  env:
+    KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
+
+
+
+
+
+
+  #   - script: |
+  #   python3.9 --version
+  # displayName: 'Verify Python Version'
+
+
+# trigger:
+# - main
+
+# pool:
+#   vmImage: 'ubuntu-latest'
+
+# steps:
+# - task: UsePythonVersion@0
+#   inputs:
+#     versionSpec: '3.9'
+#     addToPath: true
+
+# - script: |
+#     python -m pip install --upgrade pip
+#     pip install -r requirements.txt
+#   displayName: 'Install dependencies'
+
+# - task: Docker@2
+#   inputs:
+#     containerRegistry: 'docker hub connection/3122022'
+#     repository: '3122022/azure-sample-app'
+#     command: 'buildAndPush'
+#     Dockerfile: '**/Dockerfile'
+#     tags: 'latest'
+
+# - task: Kubernetes@1
+#   inputs:
+#     connectionType: 'KubernetesServiceConnection'
+#     kubernetesServiceEndpoint: 'k3s-rancher-ubuntu-preview'
+#     namespace: 'default'
+#     command: 'apply'
+#     arguments: '-f k8s/deployment.yaml'
