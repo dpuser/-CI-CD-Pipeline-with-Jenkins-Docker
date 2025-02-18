@@ -12,12 +12,14 @@ pool:
 
 steps:
 - script: |
+    export PATH="/home/devops/.local/bin:$PATH"
     python3.9 --version
   displayName: 'Verify Python Version'
 
 - script: |
+    export PATH="/home/devops/.local/bin:$PATH"
     python3.9 -m pip install --upgrade pip
-    pip3.9 install -r app/requirements.txt
+    pip install -r app/requirements.txt
   displayName: 'Install dependencies'
 
 - task: Docker@2
@@ -35,10 +37,13 @@ steps:
   env:
     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
 
-- script: kubectl apply -f k8s/deployment.yaml
+- script: |
+    export PATH="/home/devops/.local/bin:$PATH"
+    kubectl apply -f k8s/deployment.yaml
   displayName: 'Deploy to Kubernetes'
   env:
     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
+
 
 
 
