@@ -32,7 +32,11 @@ steps:
 
 - script: |
     mkdir -p ~/.kube
-    echo "$(KUBECONFIG_CONTENT)" | base64 --decode > ~/.kube/config
+    if [ -z "$KUBECONFIG_CONTENT" ]; then
+        echo "KUBECONFIG_CONTENT is empty"
+        exit 1
+    fi
+    echo "$KUBECONFIG_CONTENT" | base64 --decode > ~/.kube/config
   displayName: 'Set up kubeconfig'
   env:
     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
@@ -43,6 +47,7 @@ steps:
   displayName: 'Deploy to Kubernetes'
   env:
     KUBECONFIG_CONTENT: $(KUBECONFIG_CONTENT)
+
 
 
 
